@@ -4,6 +4,15 @@
 
 Jacob, Josh, Andrew, Alfredo, and Benedict
 
+## Meeting Time:
+
+Tuesdays @ 6:30pm via Discord
+
+- Things to decide by next meeting:
+  - **Confirm project idea**
+  - Wireframe (maybe)
+  - ERD (maybe)
+
 ## Tech Stack
 
 - Front End

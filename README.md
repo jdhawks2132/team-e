@@ -2,7 +2,7 @@
 
 ## Members:
 
-Jacob, Josh, Andrew, Alfredo, and Benedict
+Kevin, Josh, Andrew, Alfredo, and Benedict
 
 ## Meeting Time:
 

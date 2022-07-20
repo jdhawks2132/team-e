@@ -1,6 +1,21 @@
 # Welcome Team E!
+
+## Install Dependencies
+
+```
+npm install
+```
+
+## Spin Up Local Server
+
+```
+npm run dev
+```
+
 <!-- Alfredo -->
+
 Hello Team-E!!
+
 ## Members:
 
 Kevin, Josh, Andrew, Alfredo, and Benedict
@@ -34,13 +49,11 @@ Tuesdays @ 6:30pm via Discord
   - Sign Up or Login Sign out
     - User
       - Email/ PW/ Icon
-      
     - Projects (FULL CRUD)
       - Titles
       - Description
       - Due Dates
       - Team Members
-      
   - Click on Projects for more info
   - Chat with Project Team
   - Assign existing users to projects

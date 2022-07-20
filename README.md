@@ -32,7 +32,7 @@ Tuesdays @ 6:30pm via Discord
 
 - Front End
 
-  - ReactJS
+  - ReactJS (serving with Vite)
   - Styling - TBD
 
 - Back End

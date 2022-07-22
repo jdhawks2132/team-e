@@ -43,6 +43,8 @@ Tuesdays @ 6:30pm via Discord
 - Deployment
   - Firebase Hosting
 
+[Deployed Site](https://project-manager-a1379.web.app/)
+
 ### Project Management Application
 
 - User Can:
@@ -57,3 +59,18 @@ Tuesdays @ 6:30pm via Discord
   - Click on Projects for more info
   - Chat with Project Team
   - Assign existing users to projects
+
+### Deployment Instructions
+
+Build the dist folder
+
+```
+npm run build
+```
+
+Deploy to Firebase Hosting
+
+```
+firebase deploy
+```
+

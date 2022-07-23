@@ -1,0 +1,31 @@
+# Initial thoughts for data structure planning
+
+## Project Structure
+Each level consists of (at minimum): [Title, Description]
+
+- Project, a collection of phases
+  - Phase(s), belong to a project, can be split into tasks
+    - Task(s), belong to a phase
+
+## Attributes 
+Should be applicable to any Project, Phase, or Task:
+
+- Priority [Urgent, High, Moderate, Low, None]
+- Dependencies [Waiting On, Blocking, Linked To]
+- Status [Complete, In-progress, Stuck, Not Started]
+- Deadline (Calendar date, due date)
+- Time (String estimation of how much time task/phase will take to complete)
+- Budget (Number, the user estimation)
+- Cost (Number, the actual cost during project)
+
+## User structure with respect to Project:
+(Do we want to grant project owners special rights? Probably yes)
+- ADMIN
+  - Can create and own a project
+  - Can add/invite users to the project
+  - Can delete a project
+
+- USER (including admin)
+  - Can create and modify phases & respective attributes
+  - Can create and modify tasks & respective attributes
+  - Can change personal information: [Name, Email, Password, Icon]

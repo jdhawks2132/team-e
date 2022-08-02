@@ -12,6 +12,7 @@ export const useCollection = (collection, _query, _orderBy) => {
 
   useEffect(() => {
     let ref = projectFirestore.collection(collection)
+    console.log(ref)
 
     if (query) {
       ref = ref.where(...query)

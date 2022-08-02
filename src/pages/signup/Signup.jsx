@@ -1,5 +1,12 @@
 import { useState } from 'react';
 import { useSignup } from '../../hooks/useSignup';
+
+//Styling
+import  Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
+import { Typography, TextField, Button, Alert } from '@mui/material';
+
+
 const Signup = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -36,44 +43,27 @@ const Signup = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<h2>Sign Up</h2>
-			<label>
-				<span>email</span>
-				<input
-					required
-					type='email'
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-				/>
-			</label>
-			<label>
-				<span>password</span>
-				<input
-					required
-					type='password'
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-			</label>
-			<label>
-				<span>display name</span>
-				<input
-					required
-					type='text'
-					value={displayName}
-					onChange={(e) => setDisplayName(e.target.value)}
-				/>
-			</label>
-			<label>
-				<span>choose a thumbnail:</span>
-				<input required type='file' onChange={handleFileChange} />
-				{thumbError && <p>{thumbError}</p>}
-			</label>
-			{!isPending && <button>Sign Up</button>}
-			{isPending && <p>Loading...</p>}
-			{error && <p>{error}</p>}
-		</form>
+		<>
+		<Box component={"form"} id='singup'>
+			<Typography component={'h2'} variant={'h3'} color='black'>Sign Up</Typography>
+			<TextField required label='Email' id='singup-email' 
+					value={email} onChange={(e) => setEmail(e.target.value)}
+			/>
+			<TextField required label='Password' id='singup-password' type="password"
+					value={password} onChange={(e) => setPassword(e.target.value)}
+			/>
+			<TextField required label='Display Name' id='singup-name' 
+					value={displayName} onChange={(e) => setDisplayName(e.target.value)}
+			/>
+			<TextField required helperText='Choose a Thumbnail' id='singup-thumbnail' type='file' 
+					error={thumbError} onChange={handleFileChange}
+			/>
+			{!isPending && <Button size='large' onClick={handleSubmit}>Sign Up</Button>}
+			{isPending && <CircularProgress/>}
+			{error && <Alert  severity='error'>{error}</Alert> }
+		
+		</Box>
+		</>
 	);
 };
 

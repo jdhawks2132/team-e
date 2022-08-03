@@ -9,6 +9,8 @@ import Project from './pages/project/Project';
 import Signup from './pages/signup/Signup';
 import Login from './pages/login/Login';
 
+import Logout from './pages/logout/Logout'
+
 function App() {
 	const [count, setCount] = useState(0);
 
@@ -17,6 +19,8 @@ function App() {
 			
 			<BrowserRouter>
 				<Routes>
+					<Route path='/logout' element={<Logout />} />
+					{/* temp path */}
 					<Route path='/' element={<Dashboard />} />
 					<Route path='/create' element={<Create />} />
 					<Route path='/login' element={<Login />} />

@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useSignup } from '../../hooks/useSignup';
 
 //Styling
-import { Box } from '@mui/material';
+import  Container  from '@mui/material/Container';
+import  Paper  from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress'
-import { Typography, TextField, Button, Alert } from '@mui/material';
-Git
+import { Typography, TextField, Button, Alert, Box } from '@mui/material';
+
 
 const Signup = () => {
 	const [email, setEmail] = useState('');
@@ -43,9 +44,16 @@ const Signup = () => {
 	};
 
 	return (
-		<>
-		<Box component={"form"} id='singup'>
-			<Typography component={'h2'} variant={'h3'} color='black'>Sign Up</Typography>
+		<Container sx={{display:'flex'}}>
+		<Paper component={"form"} id='singup' elevation={10}
+			 sx={{backgroundColor: 'white', 
+			 	height: '75vh', 
+			 	width: '75vw',
+				borderRadius: '10px',
+				display:"flex",
+				flexDirection:"column",
+				'& .MuiTextField-root': {width: '50%'}}}>
+			<Typography component={'h2'} variant={'h3'} color='black' py={10}>Sign Up</Typography>
 			<TextField required label='Email' id='singup-email' 
 					value={email} onChange={(e) => setEmail(e.target.value)}
 			/>
@@ -56,14 +64,14 @@ const Signup = () => {
 					value={displayName} onChange={(e) => setDisplayName(e.target.value)}
 			/>
 			<TextField required helperText='Choose a Thumbnail' id='singup-thumbnail' type='file' 
-					error={thumbError} onChange={handleFileChange}
+					  error={thumbError} onChange={handleFileChange}
 			/>
-			{!isPending && <Button size='large' onClick={handleSubmit}>Sign Up</Button>}
+			{!isPending && <Button size='large' variant='contained' onClick={handleSubmit}>Sign Up</Button>}
 			{isPending && <CircularProgress/>}
 			{error && <Alert  severity='error'>{error}</Alert> }
 		
-		</Box>
-		</>
+		</Paper>
+		</Container >
 	);
 };
 

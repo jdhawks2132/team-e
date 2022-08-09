@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
+import LoginInputs from "./LoginInputs";
+import { Link as Route } from "react-router-dom";
+//styling
 import { Container } from "@mui/system";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EmailTwoTone from "@mui/icons-material/EmailTwoTone";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import LoginInputs from "./LoginInputs";
-import { Link } from "@mui/material";
-import { Link as Route } from "react-router-dom";
+import {Button, Typography, Link} from "@mui/material";
+
 
 const Login = () => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });

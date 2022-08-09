@@ -1,8 +1,7 @@
 import { useState } from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import { InputAdornment } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
+//styling
+import { InputAdornment, FormControl, InputLabel, OutlinedInput } from "@mui/material";
+
 
 
 const LoginInputs = ({ el: { index, label, name, type, value,  visibleIcon, notVisibleIcon, cursor }, userInput, setUserInput }) => {

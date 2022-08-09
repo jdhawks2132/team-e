@@ -1,8 +1,15 @@
+// import ListArr from '../Task/ListArr'
 import React from 'react'
+import TaskHeader from '../Task/TaskHeader'
+
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <>
+      <TaskHeader/> 
+      {/* <ListArr/>  */}
+      
+    </>
   )
 }
 

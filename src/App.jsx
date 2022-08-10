@@ -19,7 +19,10 @@ function App() {
 			{authIsReady && (
 				<BrowserRouter>
 					<Routes>
-						<Route path='/out' element={<Logout />} />
+						<Route
+							path='/out'
+							element={user ? <Logout /> : <Navigate to='/login' />}
+						/>
 						<Route
 							path='/'
 							element={user ? <Dashboard /> : <Navigate to='/login' />}

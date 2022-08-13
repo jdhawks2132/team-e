@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router';
 import {
+	Avatar,
 	Typography,
 	TextField,
 	Box,
@@ -19,7 +21,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import SaveIcon from '@mui/icons-material/Save';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useFirestore } from '../../hooks/useFirestore';
-import { projectFirestore } from '../../firebase/config';
 import { useCollection } from '../../hooks/useCollection';
 
 const NewProject = () => {
@@ -30,23 +31,38 @@ const NewProject = () => {
 	const [endDate, setEndDate] = useState(null);
 	const [dateError, setDateError] = useState('');
 	const [budget, setBudget] = useState(0);
-	const [members, setMembers] = useState('');
 	const [isDisabled, setIsDisabled] = useState(true);
-	const [userDocs, setUserDocs] = useState([]);
 	const [users, setUsers] = useState([]);
+	const [names, setNames] = useState([]);
 	const { user, authIsReady } = useAuthContext();
 	const { addDocument, response } = useFirestore('test-projects');
 	const { documents, error } = useCollection('users');
+	const memberRef = useRef();
+	const nav = useNavigate();
 
     useEffect(() => {
-        if (documents) {
+        if (documents && authIsReady === true) {
             setUsers(
                 documents.map((user) => {
                     return { value: { ...user, id: user.id }, label: user.displayName };
                 })
             );
+
+			const owner =()=> {
+				for (let i = 0; i < documents.length; i++) {
+					if (documents[i].id === user.uid) {
+						return i
+					}
+				}
+			};
+			memberRef.current = [ documents[owner()] ]
+			setNames([user.displayName])
         }
-    }, [documents])
+    }, [documents, authIsReady])
+
+	useEffect(() => {
+		console.log("LISTENING", response)
+	}, [response])
 
 	// disable submit button if there is a date error or no project name present
 	// currently not validating emails
@@ -67,8 +83,29 @@ const NewProject = () => {
     },
     };
 
+	const handleChange = (event) => {
+		let value = event.target.value
+		setNames(
+		  // On autofill we get a stringified value.
+		  typeof value === 'string' ? value.split(',') : value,
+		);
+	};
+
+	function populateUserObjects() {
+		let people = [];
+		names.forEach((name)=> {
+			for (let i = 0; i < users.length; i++) {
+				if (name === users[i].label) {
+					people.push(users[i].value)
+				}
+			}
+		})
+		memberRef.current = people
+	}
+
 	async function handleSubmit(e) {
 		e.preventDefault();
+		populateUserObjects();
 		setIsDisabled(true);
 
 		let newProject = {
@@ -78,7 +115,7 @@ const NewProject = () => {
 			startdate: startDate && startDate.toString(), // Dates from the date picker are stored as Moment Objects.
 			enddate: endDate && endDate.toString(), // Firebase cannot store Moment Objects, so they will convert to ISO strings
 			budget: budget,
-			members: userDocs,
+			members: memberRef.current,
 			owner: user.uid,
 		};
 
@@ -88,6 +125,7 @@ const NewProject = () => {
 		} catch (e) {
 			console.error('Error adding document: ', e);
 		}
+		nav('/')
 	}
 
 	return (
@@ -178,20 +216,42 @@ const NewProject = () => {
 						/>
 					</FormControl>
 				</Stack>
-				<TextField
-					id='members'
-					type='email'
-					fullWidth={true}
-					multiple
-					label='Invite Team Members'
-					name='members'
-					onChange={(e) => {
-						setMembers(e.target.value);
-					}}
-					helperText='You can enter multiple emails separated by commas'
-				/>
-				<Button
-					mt={2}
+				<FormControl fullWidth variant="outlined">
+					<InputLabel id="member-label">Team</InputLabel>
+						<Select
+						id="member-select"
+						labelId="member-label"
+						label="Team"
+						multiple
+						value={names}
+						onChange={handleChange}
+						input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+						renderValue={(selected) => (
+							<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+							{selected.map((value) => (
+								<Chip key={value} label={value} />
+							))}
+							</Box>
+						)}
+						MenuProps={MenuProps}
+						>
+						{users.map((userDoc) => (
+							<MenuItem
+							key={userDoc.label}
+							value={userDoc.label}
+							>
+								<Avatar
+								alt={userDoc.label}
+								src={userDoc.value.photoURL}
+								sx={{ width: 28, height: 28, margin: 1 }}
+								/>
+							<p><strong>{userDoc.label}</strong> <i>{' ' + userDoc.value.email}</i></p>
+							</MenuItem>
+						))}
+						</Select>
+						<FormHelperText>Select team members for your project</FormHelperText>
+					</FormControl>
+				<Button sx={{ height: 50 }}
 					id='submit-btn'
 					variant='contained'
 					disabled={isDisabled}

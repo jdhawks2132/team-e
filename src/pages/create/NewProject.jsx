@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Typography, TextField, Box, Button, Stack, Divider, FormControl, InputAdornment, InputLabel, OutlinedInput, FormHelperText } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import SaveIcon from '@mui/icons-material/Save';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useFirestore } from '../../hooks/useFirestore';
+import { projectFirestore } from '../../firebase/config';
 
 const NewProject =()=> {
     const [projectName, setProjectName] = useState('');
@@ -15,7 +16,8 @@ const NewProject =()=> {
     const [budget, setBudget] = useState(0);
     const [members, setMembers] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
-    const { user } = useAuthContext();
+    const [userDocs, setUserDocs] = useState([]);
+    const { user, authIsReady } = useAuthContext();
     const { addDocument, response } = useFirestore('test-projects');
 
     // disable submit button if there is a date error or no project name present
@@ -23,30 +25,53 @@ const NewProject =()=> {
     useEffect(()=> {
         projectName === '' || dateError ? setIsDisabled(true) : setIsDisabled(false)
     }, [projectName, dateError])
-    
-    function emailSplitter(list) {
-        return list.replace(/\s/g, '').split(',')
+
+    function emailSplitter(string) {
+        // if the email field is empty, only add the project owner's email
+        if (string.length === 0) {
+            return [user.email]
+        }
+        // otherwise split the strings into seperate emails in order to query our user collection
+        let emails = string.replace(/\s/g, '').split(',')
+        emails.push(user.email)
+        return emails
+    }
+
+    async function queryUserEmails() {
+        let ref = projectFirestore.collection('users')
+        ref = ref.where('email', 'in', emailSplitter(members))
+        ref.onSnapshot(snapshot => {
+        let results = [];
+        snapshot.docs.forEach(doc => {
+            console.log(doc.id, " => ", doc.data());
+            results.push({...doc.data(), id: doc.id})
+        })
+        console.log("results", results)
+        setUserDocs(results)
+        }, error => {
+            console.log(error, "couldn't fetch data")
+        })
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
         setIsDisabled(true);
+        await queryUserEmails();
 
         let newProject = {
             "name": projectName,
             "description" : description,
+            "status" : "New",
             "startdate": startDate && startDate.toString(), // Dates from the date picker are stored as Moment Objects.
             "enddate": endDate && endDate.toString(),     // Firebase cannot store Moment Objects, so they will convert to ISO strings
             "budget": budget,
-            "members": emailSplitter(members.concat("," + user.email)), // Array will include owner's email
+            "members": userDocs,
             "owner": user.uid
         }
-        
+    
+        console.log(newProject)
         try {
-            console.log(newProject)
-            await addDocument(newProject)
-            // response does not return my newly created doc object, even on successful creation. Need to figure out why.
-            console.log(response)
+            addDocument(newProject)
         } catch (e) {
             console.error("Error adding document: ", e);
         }

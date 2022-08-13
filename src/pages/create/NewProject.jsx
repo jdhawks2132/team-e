@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Typography,
 	TextField,
@@ -17,7 +17,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useFirestore } from '../../hooks/useFirestore';
 import { projectFirestore } from '../../firebase/config';
-import { useCollection } from '../../hooks/useCollection';
 
 const NewProject = () => {
 	const [projectName, setProjectName] = useState('');
@@ -29,30 +28,16 @@ const NewProject = () => {
 	const [budget, setBudget] = useState(0);
 	const [members, setMembers] = useState('');
 	const [isDisabled, setIsDisabled] = useState(true);
-	const [userDocs, setUserDocs] = useState([]);
-	const [users, setUsers] = useState([]);
-	const { user, authIsReady } = useAuthContext();
-	const { addDocument, response } = useFirestore('test-projects');
-	const { documents, error } = useCollection('users');
-
-	console.log(documents);
+	const { user } = useAuthContext();
+	const { addDocument } = useFirestore('test-projects');
 
 	// disable submit button if there is a date error or no project name present
 	// currently not validating emails
 	useEffect(() => {
-		if (documents) {
-			setUsers(
-				documents.map((user) => {
-					return { value: { ...user, id: user.id }, label: user.displayName };
-				})
-			);
-		}
 		projectName === '' || dateError
 			? setIsDisabled(true)
 			: setIsDisabled(false);
 	}, [projectName, dateError]);
-
-	console.log(users);
 
 	function emailSplitter(string) {
 		// if the email field is empty, only add the project owner's email
@@ -66,46 +51,52 @@ const NewProject = () => {
 	}
 
 	async function queryUserEmails() {
+        let results = [];
 		let ref = projectFirestore.collection('users');
 		ref = ref.where('email', 'in', emailSplitter(members));
 		ref.onSnapshot(
 			(snapshot) => {
-				let results = [];
 				snapshot.docs.forEach((doc) => {
-					console.log(doc.id, ' => ', doc.data());
 					results.push({ ...doc.data(), id: doc.id });
 				});
-				console.log('results', results);
-				setUserDocs(results);
 			},
 			(error) => {
 				console.log(error, "couldn't fetch data");
 			}
 		);
+        return results
 	}
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 		setIsDisabled(true);
-		await queryUserEmails();
-
-		let newProject = {
-			name: projectName,
-			description: description,
-			status: 'New',
-			startdate: startDate && startDate.toString(), // Dates from the date picker are stored as Moment Objects.
-			enddate: endDate && endDate.toString(), // Firebase cannot store Moment Objects, so they will convert to ISO strings
-			budget: budget,
-			members: userDocs,
-			owner: user.uid,
-		};
-
-		console.log(newProject);
-		try {
-			addDocument(newProject);
-		} catch (e) {
-			console.error('Error adding document: ', e);
-		}
+        let newProject;
+        try {
+            try {
+                await queryUserEmails().then((data)=> {
+                    console.log("DATA", data)
+                    newProject = {
+                        name: projectName,
+                        description: description,
+                        status: 'New',
+                        startdate: startDate && startDate.toString(), // Dates from the date picker are stored as Moment Objects.
+                        enddate: endDate && endDate.toString(), // Firebase cannot store Moment Objects, so they will convert to ISO strings
+                        budget: budget,
+                        members: data,
+                        owner: user.uid,
+                    };
+                })
+            } catch (e) {
+                console.error("query fetch error: ", e)
+            }
+            console.log(newProject);
+            setTimeout(()=> {
+                addDocument(newProject)
+            }, 50)
+            
+        } catch (e) {
+            console.error('Error adding document: ', e);
+        }
 	}
 
 	return (

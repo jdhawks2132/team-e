@@ -1,9 +1,18 @@
-import React from 'react'
+// import ListArr from '../Task/ListArr'
+import React from 'react';
+import TaskHeader from '../Task/TaskHeader';
+import { useCollection } from '../../hooks/useCollection';
 
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+	const { documents, error } = useCollection('test-projects');
 
-export default Dashboard
+	console.log(documents);
+	return (
+		<>
+			<TaskHeader />
+			{/* <ListArr/>  */}
+		</>
+	);
+};
+
+export default Dashboard;

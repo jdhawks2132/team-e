@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuthContext } from './hooks/useAuthContext';
 import reactLogo from './assets/react.svg';
 import './App.css';
 
@@ -9,23 +10,48 @@ import Project from './pages/project/Project';
 import Signup from './pages/signup/Signup';
 import Login from './pages/login/Login';
 import NewProject from './pages/create/NewProject';
+import Logout from './pages/logout/Logout';
 
 function App() {
-	const [count, setCount] = useState(0);
+	const { authIsReady, user } = useAuthContext();
 
 	return (
 		<div className='App'>
-			
-			<BrowserRouter>
-				<Routes>
-					<Route path='/' element={<Dashboard />} />
-					<Route path='/create' element={<Create />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/signup' element={<Signup />} />
-					<Route path='/projects/:id' element={<Project />} />
-					<Route path='/newproject' element={<NewProject />} />
-				</Routes>
-			</BrowserRouter>
+			{authIsReady && (
+				<BrowserRouter>
+					<Routes>
+						<Route
+							path='/out'
+							element={user ? <Logout /> : <Navigate to='/login' />}
+						/>
+						<Route
+							path='/'
+							element={user ? <Dashboard /> : <Navigate to='/login' />}
+						/>
+						<Route
+							path='/create'
+							element={user ? <Create /> : <Navigate to='/login' />}
+						/>
+            <Route
+							path='/newproject'
+							element={user ? <NewProject /> : <Navigate to='/login' />}
+						/>
+						<Route
+							path='/login'
+							element={!user ? <Login /> : <Navigate to='/' />}
+						/>
+						<Route
+							path='/signup'
+							element={!user ? <Signup /> : <Navigate to='/' />}
+						/>
+						<Route
+							path='/projects/:id'
+							element={user ? <Project /> : <Navigate to='/login' />}
+						/>
+						<Route path='*' element={<Navigate to={'/'} />} />
+					</Routes>
+				</BrowserRouter>
+			)}
 		</div>
 	);
 }

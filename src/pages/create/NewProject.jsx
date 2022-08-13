@@ -4,6 +4,9 @@ import {
 	TextField,
 	Box,
 	Button,
+    Chip,
+    Select,
+    MenuItem,
 	Stack,
 	Divider,
 	FormControl,
@@ -35,59 +38,38 @@ const NewProject = () => {
 	const { addDocument, response } = useFirestore('test-projects');
 	const { documents, error } = useCollection('users');
 
-	console.log(documents);
+    useEffect(() => {
+        if (documents) {
+            setUsers(
+                documents.map((user) => {
+                    return { value: { ...user, id: user.id }, label: user.displayName };
+                })
+            );
+        }
+    }, [documents])
 
 	// disable submit button if there is a date error or no project name present
 	// currently not validating emails
 	useEffect(() => {
-		if (documents) {
-			setUsers(
-				documents.map((user) => {
-					return { value: { ...user, id: user.id }, label: user.displayName };
-				})
-			);
-		}
 		projectName === '' || dateError
 			? setIsDisabled(true)
 			: setIsDisabled(false);
 	}, [projectName, dateError]);
 
-	console.log(users);
-
-	function emailSplitter(string) {
-		// if the email field is empty, only add the project owner's email
-		if (string.length === 0) {
-			return [user.email];
-		}
-		// otherwise split the strings into seperate emails in order to query our user collection
-		let emails = string.replace(/\s/g, '').split(',');
-		emails.push(user.email);
-		return emails;
-	}
-
-	async function queryUserEmails() {
-		let ref = projectFirestore.collection('users');
-		ref = ref.where('email', 'in', emailSplitter(members));
-		ref.onSnapshot(
-			(snapshot) => {
-				let results = [];
-				snapshot.docs.forEach((doc) => {
-					console.log(doc.id, ' => ', doc.data());
-					results.push({ ...doc.data(), id: doc.id });
-				});
-				console.log('results', results);
-				setUserDocs(results);
-			},
-			(error) => {
-				console.log(error, "couldn't fetch data");
-			}
-		);
-	}
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+    PaperProps: {
+        style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+        },
+    },
+    };
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 		setIsDisabled(true);
-		await queryUserEmails();
 
 		let newProject = {
 			name: projectName,

@@ -11,6 +11,7 @@ import Signup from './pages/signup/Signup';
 import Login from './pages/login/Login';
 import NewProject from './pages/create/NewProject';
 import Logout from './pages/logout/Logout';
+import Navbar from './pages/nav/Navbar';
 
 function App() {
 	const { authIsReady, user } = useAuthContext();
@@ -19,6 +20,7 @@ function App() {
 		<div className='App'>
 			{authIsReady && (
 				<BrowserRouter>
+					<Navbar />
 					<Routes>
 						<Route
 							path='/out'
@@ -32,7 +34,7 @@ function App() {
 							path='/create'
 							element={user ? <Create /> : <Navigate to='/login' />}
 						/>
-            <Route
+            			<Route
 							path='/newproject'
 							element={user ? <NewProject /> : <Navigate to='/login' />}
 						/>

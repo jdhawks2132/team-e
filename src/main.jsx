@@ -9,9 +9,9 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<LocalizationProvider dateAdapter={AdapterMoment}>
-		<AuthContextProvider>
-			<App />
-		</AuthContextProvider>
+			<AuthContextProvider>
+				<App />
+			</AuthContextProvider>
 		</LocalizationProvider>
 	</React.StrictMode>
 );

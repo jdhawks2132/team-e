@@ -10,6 +10,7 @@ import Projects from './pages/project/Projects'
 import Project from './pages/project/Project';
 import Signup from './pages/signup/Signup';
 import Login from './pages/login/Login';
+import NewProject from './pages/create/NewProject';
 import Logout from './pages/logout/Logout';
 
 function App() {
@@ -31,6 +32,10 @@ function App() {
 						<Route
 							path='/create'
 							element={user ? <Create /> : <Navigate to='/login' />}
+						/>
+            <Route
+							path='/newproject'
+							element={user ? <NewProject /> : <Navigate to='/login' />}
 						/>
 						<Route
 							path='/login'

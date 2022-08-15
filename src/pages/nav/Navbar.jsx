@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import { styled, useTheme } from '@mui/material/styles';
-import { Avatar, Box, Container, CssBaseline, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Box, CssBaseline, Toolbar, Typography, IconButton } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import PeopleIcon from '@mui/icons-material/People';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import ForumIcon from '@mui/icons-material/Forum';
-import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
 import SideNav from './SideNav';
-import Logout from './../logout/Logout';
 
 const drawerWidth = 240;
 
@@ -53,7 +43,9 @@ export default function Navbar() {
 
   useEffect(()=> {
     if (auth.user === null) {
+        setOpen(false)
         setUser(defaultUser)
+        setAuthorized(false)
     } else {
         setUser(auth.user)
         setAuthorized(true)
@@ -96,7 +88,9 @@ export default function Navbar() {
                 }
         </AppBar>
         <Toolbar /> {/* Cool trick that ensures Navbar doesn't hide content at top */}
-        <SideNav handleDrawerClose={handleDrawerClose} open={open} user={user} />
+        { authorized &&
+          <SideNav handleDrawerClose={handleDrawerClose} open={open} user={user} />
+        }
     </Box>
   );
 }

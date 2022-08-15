@@ -1,9 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import { Avatar, Box, Drawer, CssBaseline, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import MuiAppBar from '@mui/material/AppBar';
-import MenuIcon from '@mui/icons-material/Menu';
+import { 
+  ListItemAvatar,
+  Avatar,
+  Box,
+  Drawer, 
+  CssBaseline, 
+  List, 
+  Typography, 
+  Divider, 
+  IconButton, 
+  ListItem, 
+  ListItemButton, 
+  ListItemIcon, 
+  ListItemText 
+} from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -13,6 +24,9 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ForumIcon from '@mui/icons-material/Forum';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { useLogout } from '../../hooks/useLogout';
+import NestedProjectList from './NestedProjectList';
 
 const drawerWidth = 240;
 
@@ -27,6 +41,31 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function SideNav(props) {
   const theme = useTheme();
+  const { logout } = useLogout();
+
+  function clickEvent(text) {
+    switch (text) {
+      case 'Logout':
+        return logout();
+      default:
+        return null;
+    }
+  }
+
+  // add in more buttons as we add features...
+  const topNavButtonData = [
+    { text: "Dashboard", icon: <DashboardIcon />, link: '/' },
+    // { text: "Projects", icon: <AssignmentIcon />, link: '/' },
+    { text: "New Project", icon: <AddCircleOutlineIcon />, link: '/newproject' },
+    // { text: "Team Members", icon: <PeopleIcon />, link: '/' },
+    // { text: "Calendar", icon: <CalendarMonthIcon />, link: '/' },
+    // { text: "Messages", icon: <ForumIcon />, link: '/' }
+  ]
+
+  const bottomNavButtonData = [
+    // { text: "Settings", icon: <SettingsIcon />, link: '/' },
+    { text: "Logout", icon: <LogoutIcon />, link: '/' }
+  ]
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -54,32 +93,44 @@ export default function SideNav(props) {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Dashboard', 'Projects', 'Team Members', 'Calendar', 'Messages'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
+          {topNavButtonData.map((nav, index) => (
+            <ListItem key={index} disablePadding>
+              <ListItemButton to={nav.link}>
                 <ListItemIcon>
-                  {[<DashboardIcon/>, <AssignmentIcon/>, <PeopleIcon/>, <CalendarMonthIcon/>, <ForumIcon/>][index]}
+                  {nav.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={nav.text} />
               </ListItemButton>
             </ListItem>
           ))}
+          
         </List>
+        <NestedProjectList />
         <Divider />
         <List>
             <ListItem>
-                <Avatar alt="User Avatar" src={props.user.photoURL} />
-                <ListItemText>
-                    {props.user.email}
-                </ListItemText>
+              <ListItemAvatar>
+                <Avatar alt="User Avatar" src={props.user.photoURL} sx={{ width: 30, height: 30 }}/>
+              </ListItemAvatar>
+              <ListItemText>
+                  Logged in as:
+              </ListItemText>
             </ListItem>
-          {['Settings', 'Logout'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
+            <ListItem>  
+              <ListItemText>
+                  <strong>{props.user.email}</strong>
+              </ListItemText>
+            </ListItem>
+            <Divider />
+          {bottomNavButtonData.map((nav, index) => (
+            <ListItem key={index} disablePadding>
+              <ListItemButton onClick={(e)=> {
+                e.preventDefault();
+                clickEvent(nav.text)}}>
                 <ListItemIcon>
-                  {[<SettingsIcon />, <LogoutIcon />][index]}
+                  {nav.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={nav.text} />
               </ListItemButton>
             </ListItem>
           ))}

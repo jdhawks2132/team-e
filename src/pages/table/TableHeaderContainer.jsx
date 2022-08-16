@@ -6,7 +6,7 @@ import TableBodyInputs from "./TableBodyInputs";
 
 
 const TableHeaderContainer = ({ documents }) => {
-  const [ isEdit , setIsEdit] = useState(false)
+  const [ isEdit , setIsEdit] = useState('')
 
 
 
@@ -32,10 +32,10 @@ const TableHeaderContainer = ({ documents }) => {
             key={item.id}
             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-            {!isEdit  ?
-              <TableBodyContainer item={item} isEdit={isEdit} setIsEdit={setIsEdit} />
-              :
+            {isEdit === item.id  ?
               <TableBodyInputs isEdit={isEdit} setIsEdit={setIsEdit} item={item} />
+              :
+              <TableBodyContainer item={item} isEdit={isEdit} setIsEdit={setIsEdit} />
             }
             </TableRow>
           ))}

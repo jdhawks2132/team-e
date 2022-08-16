@@ -4,23 +4,29 @@ import { useState } from "react";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ClearIcon from "@mui/icons-material/Clear";
 import { TableCell, TextField } from "@mui/material";
+//import useFireStore
+import { useFirestore } from "../../hooks/useFirestore";
 
+//change the input object to match the firestore data
 const TableBodyInputs = ({ item, isEdit, setIsEdit }) => {
+    //destructure the method you want
+    const { updateDocument, response } = useFirestore('test-projects');
+
     const [inputs, setInputs] = useState({
-        nameTitle: item.name,
-        ownerTitle: item.owner,
-        title: item.description,
+        name: item.name,
+        owner: item.owner,
+        description: item.description,
     });
     const handleChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     };
 
+    console.log(inputs)
 
-    const submitHandler = (id) => {
-        const newEditItems = item.find((el) => el.id === id)
-        setIsEdit(!isEdit)
-       setInputs(newEditItems)
-        console.log(newEditItems)
+    const submitHandler = (e) =>{  
+        e.preventDefault();
+        updateDocument(item.id, inputs);
+        setIsEdit(false);
     }
 
     // const mapMembers = item.members.map(member => member.displayName)
@@ -53,8 +59,8 @@ const TableBodyInputs = ({ item, isEdit, setIsEdit }) => {
                 <TextField
                     size="small"
                     onChange={handleChange}
-                    value={inputs.nameTitle}
-                    name="nameTitle"
+                    value={inputs.name}
+                    name="name"
                 >
                 </TextField>
             </TableCell>
@@ -62,8 +68,8 @@ const TableBodyInputs = ({ item, isEdit, setIsEdit }) => {
                 <TextField
                     size="small"
                     onChange={handleChange}
-                    value={inputs.ownerTitle}
-                    name="ownerTitle"
+                    value={inputs.owner}
+                    name="owner"
                 >
                 </TextField>
             </TableCell>
@@ -71,8 +77,8 @@ const TableBodyInputs = ({ item, isEdit, setIsEdit }) => {
                 <TextField
                     size="small"
                     onChange={handleChange}
-                    value={inputs.title}
-                    name="title"
+                    value={inputs.description}
+                    name="description"
                 >
                 </TextField>
             </TableCell>

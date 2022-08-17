@@ -56,6 +56,9 @@ export default function NestedProjectList() {
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
+                        <ListItemButton key={0} to={'/projects'} > 
+                            <ListItemText primary={`All projects`} sx={{color: 'red'}} inset/>
+                        </ListItemButton>
                     {userProjects.map((project, index)=> (
                         <ListItemButton key={index} to={`/projects/${project.id}`} inset="true">
                             <ListItemIcon sx={{ pl: 2 }}>

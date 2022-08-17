@@ -6,7 +6,7 @@ import './App.css';
 
 import Dashboard from './pages/dashboard/Dashboard';
 import Create from './pages/create/Create';
-import Projects from './pages/project/Projects'
+import Projects from './pages/project/Projects';
 import Project from './pages/project/Project';
 import Signup from './pages/signup/Signup';
 import Login from './pages/login/Login';
@@ -49,7 +49,11 @@ function App() {
 						/>
 						<Route
 							path='/projects'
-							element={user ? <Projects /> : <Navigate to='/login' />}
+							element={user ? <Projects /> : <Navigate to='/' />}
+						/>
+						<Route
+							path='/projects/:id'
+							element={user ? <Project /> : <Navigate to='/login' />}
 						/>
 						<Route path='*' element={<Navigate to={'/'} />} />
 					</Routes>
@@ -60,3 +64,4 @@ function App() {
 }
 
 export default App;
+

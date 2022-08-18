@@ -1,20 +1,6 @@
-# Welcome Team E!
-
-## Install Dependencies
-
-```
-npm install
-```
-
-## Spin Up Local Server
-
-```
-npm run dev
-```
-
-<!-- Alfredo -->
 
 ![team-e logo](https://github.com/jdhawks2132/team-e/blob/main/EORG.png?raw=true)
+
 
 ## Members:
 
@@ -37,7 +23,7 @@ Kevin, Josh, Andrew, Alfredo, and Benedict
 
 [Deployed Site](https://project-manager-a1379.web.app/)
 
-### Project Management Application
+### Project Management Application (E-ORG)
 
 - User Can:
   - Sign Up or Login Sign out
@@ -52,17 +38,15 @@ Kevin, Josh, Andrew, Alfredo, and Benedict
   - Chat with Project Team
   - Assign existing users to projects
 
-### Deployment Instructions
-
-Build the dist folder
+## Install Dependencies
 
 ```
-npm run build
+npm install
 ```
 
-Deploy to Firebase Hosting
+## Spin Up Local Server
 
 ```
-firebase deploy
+npm run dev
 ```
 

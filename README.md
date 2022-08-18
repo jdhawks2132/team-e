@@ -14,19 +14,11 @@ npm run dev
 
 <!-- Alfredo -->
 
-Hello Team-E!!
+![team-e logo](https://github.com/jdhawks2132/team-e/blob/main/EORG.png?raw=true)
 
 ## Members:
 
 Kevin, Josh, Andrew, Alfredo, and Benedict
-
-## Meeting Time:
-
-Tuesdays @ 6:30pm via Discord
-
-- Things to decide by next meeting:
-  - **Backend Structure**
-  - **General Wireframe**
 
 ## Tech Stack
 

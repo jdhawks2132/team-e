@@ -21,6 +21,7 @@ const firestoreReducer = (state, action) => {
 			};
 		case 'DELETED_DOCUMENT':
 			return { isPending: false, document: null, success: true, error: null };
+
 		case 'ERROR':
 			return {
 				isPending: false,
@@ -28,6 +29,7 @@ const firestoreReducer = (state, action) => {
 				success: false,
 				error: action.payload,
 			};
+
 		case 'UPDATED_DOCUMENT':
 			return {
 				isPending: false,
@@ -35,6 +37,15 @@ const firestoreReducer = (state, action) => {
 				success: true,
 				error: null,
 			};
+
+		case 'ERROR':
+			return {
+				isPending: false,
+				document: null,
+				success: false,
+				error: action.payload,
+			};
+
 		default:
 			return state;
 	}
@@ -47,7 +58,9 @@ export const useFirestore = (collection) => {
 	// collection ref
 	const ref = projectFirestore.collection(collection);
 
-	// only dispatch if not cancelled
+
+	// only dispatch is not cancelled
+
 	const dispatchIfNotCancelled = (action) => {
 		if (!isCancelled) {
 			dispatch(action);
@@ -105,7 +118,10 @@ export const useFirestore = (collection) => {
 
 	return { addDocument, deleteDocument, updateDocument, response };
 
+
 };
 
 
+
+};
 

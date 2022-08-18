@@ -1,32 +1,48 @@
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import reactLogo from './assets/react.svg';
+import { useAuthContext } from './hooks/useAuthContext';
+
 import './App.css';
 
 import Dashboard from './pages/dashboard/Dashboard';
-import Create from './pages/create/Create';
 import Project from './pages/project/Project';
 import Signup from './pages/signup/Signup';
 import Login from './pages/login/Login';
-import Logout from './pages/logout/Logout';
+import NewProject from './pages/create/NewProject';
+import Navbar from './pages/nav/Navbar';
 
 function App() {
-	const [count, setCount] = useState(0);
+	const { authIsReady, user } = useAuthContext();
 
 	return (
 		<div className='App'>
-			
-			<BrowserRouter>
-				<Routes>
-					<Route path='/out' element={<Logout />}/>
-					<Route path='/' element={<Dashboard />} />
-					<Route path='/create' element={<Create />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/signup' element={<Signup />} />
-					<Route path='/projects/:id' element={<Project />} />
-					<Route path='*' element={<Navigate to={'/'} />}/>
-				</Routes>
-			</BrowserRouter>
+			{authIsReady && (
+				<BrowserRouter>
+					<Navbar />
+					<Routes>
+						<Route
+							path='/'
+							element={user ? <Dashboard /> : <Navigate to='/login' />}
+						/>
+						<Route
+							path='/newproject'
+							element={user ? <NewProject /> : <Navigate to='/login' />}
+						/>
+						<Route
+							path='/login'
+							element={!user ? <Login /> : <Navigate to='/' />}
+						/>
+						<Route
+							path='/signup'
+							element={!user ? <Signup /> : <Navigate to='/' />}
+						/>
+						<Route
+							path='/projects/:id'
+							element={user ? <Project /> : <Navigate to='/login' />}
+						/>
+						<Route path='*' element={<Navigate to={'/'} />} />
+					</Routes>
+				</BrowserRouter>
+			)}
 		</div>
 	);
 }

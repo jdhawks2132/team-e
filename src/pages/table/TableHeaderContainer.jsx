@@ -7,7 +7,6 @@ import TableBodyInputs from "./TableBodyInputs";
 
 const TableHeaderContainer = ({ documents }) => {
   const [ isEdit , setIsEdit] = useState('')
-console.table(documents)
 
 
   return (

@@ -62,7 +62,7 @@ const TableBodyInputs = ({
 	};
 
 	const cancelEditToggle = () => setIsEdit(!isEdit);
-	console.log(inputs);
+
 	return (
 		<>
 			<TableCell

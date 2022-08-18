@@ -74,7 +74,7 @@ export default function Navbar() {
                     :
                     <Toolbar>
                         <Typography variant="h6" noWrap component="div">
-                            Project Manager App
+                            E-ORG
                         </Typography>
                     </Toolbar>
                 }

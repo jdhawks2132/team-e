@@ -85,7 +85,7 @@ export default function SideNav(props) {
       >
         <DrawerHeader>
           <Typography>
-            Project Manager App
+            E-ORG
           </Typography>
           <IconButton onClick={props.handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

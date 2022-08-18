@@ -43,7 +43,7 @@ const Login = () => {
       <Typography variant="h3" sx={{ color: "black" }}>
         Login
       </Typography>
-      ;
+      
       {inputsArr.map((el, index) => (
         <LoginInputs
           key={index}

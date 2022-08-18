@@ -1,15 +1,17 @@
-// import ListArr from '../Task/ListArr'
-import React from 'react';
-import TaskHeader from '../Task/TaskHeader';
-import { useCollection } from '../../hooks/useCollection';
+// import ListArr from '../Task/ListArr'm
+// import TaskHeader from '../Task/TaskHeader';
+import { useCollection } from "../../hooks/useCollection";
+
+import TableHeaderContainer from "../table/TableHeaderContainer";
 
 const Dashboard = () => {
-	const { documents, error } = useCollection('test-projects');
+	const { documents, error } = useCollection("test-projects");
 
-	console.log(documents);
 	return (
 		<>
-			<TaskHeader />
+
+			<TableHeaderContainer documents={documents} />
+			{/* <TaskHeader /> */}
 			{/* <ListArr/>  */}
 		</>
 	);

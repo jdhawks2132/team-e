@@ -117,6 +117,7 @@ const NewProject = () => {
 			enddate: endDate && endDate.toString(), // Firebase cannot store Moment Objects, so they will convert to ISO strings
 			budget: budget,
 			members: memberRef.current,
+			memberNames: names,
 			owner: user.uid,
 		};
 

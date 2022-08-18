@@ -13,7 +13,7 @@ const TableHeaderContainer = ({ documents }) => {
   return (
     <TableContainer component={Paper}>
       <Table >
-        <TableHead  sx={{backgroundColor:"#1976d2" }}>
+        <TableHead >
           <TableRow >
             <TableCell align="left"></TableCell>
             <TableCell align="left"></TableCell>

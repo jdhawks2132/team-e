@@ -99,7 +99,7 @@ const TableBodyInputs = ({ item:{id, name, owner, description, members, status, 
                     name="budget"
                 ></TextField>
             </TableCell>
-            {/* <TableCell>
+            <TableCell>
                 <TextField
                     size="small"
                     onChange={handleChange}
@@ -114,7 +114,7 @@ const TableBodyInputs = ({ item:{id, name, owner, description, members, status, 
                     value={inputs?.enddate || ""}
                     name="enddate"
                 ></TextField>
-            </TableCell> */}
+            </TableCell>
         </>
     );
 };

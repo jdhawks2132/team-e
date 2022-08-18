@@ -104,4 +104,8 @@ export const useFirestore = (collection) => {
 	}, []);
 
 	return { addDocument, deleteDocument, updateDocument, response };
+
 };
+
+
+

@@ -7,21 +7,7 @@ import { MenuItem, Select, TableCell, TextField } from "@mui/material";
 
 
 //change the input object to match the firestore data
-const TableBodyInputs = ({
-  item: {
-    id,
-    name,
-    owner,
-    description,
-    members,
-    status,
-    budget,
-    enddate,
-    startdate,
-  },
-  isEdit,
-  setIsEdit,
-}) => {
+const TableBodyInputs = ({ item: {id, name, owner, description, members, status, budget, enddate, startdate, },isEdit, setIsEdit,}) => {
   console.log(id, members);
   //destructure the method you want
     const { updateDocument, response } = useFirestore("test-projects");

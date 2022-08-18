@@ -18,7 +18,7 @@ const TableBodyContainer = ({ item: {id, name, owner, description, budget, start
       <TableCell align="left">{owner}</TableCell>
       <TableCell align="left">{description}</TableCell>
       <TableCell align="left">{members.map(member => member.displayName + " ") }</TableCell>
-      <TableCell align="right">{status}</TableCell>
+      <TableCell align="right">{typeof status === 'string' ? status : status.value}</TableCell>
       <TableCell align="right">{budget}</TableCell>
       <TableCell align="right">{startdate}</TableCell>
        <TableCell align="right">{enddate}</TableCell>

@@ -3,31 +3,25 @@ import { useFirestore } from "../../hooks/useFirestore";
 //styling
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ClearIcon from "@mui/icons-material/Clear";
-import {  MenuItem, Select, TableCell, TextField } from "@mui/material";
+import { MenuItem, Select, TableCell, TextField } from "@mui/material";
 
-
-//change the input object to match the firestore data
-const TableBodyInputs = ({ item: {id, name, owner, description, members, status, budget, enddate, startdate, },isEdit, setIsEdit,}) => {
+const TableBodyInputs = ({ item:{id, name, owner, description, members, status, budget, enddate, startdate, },isEdit, setIsEdit,}) => {
     const { updateDocument, response } = useFirestore("test-projects");
-
+    console.log(members);
     //destructure the method you want
-    // const optionStatus = [ status, "In Progress", "Done"]
-    // const [options, setOptions] = useState(optionStatus);
 
+    const statusOptions = ["New", "Completed", "In Progress", "On Hold"];
 
     const [inputs, setInputs] = useState({
         name: name,
         owner: owner,
         description: description,
         members: members,
+        status: status,
         budget: budget,
         startdate: startdate,
         enddate: enddate,
     });
-
-    // const handleOptions = (e) => {
-    //     setOptions(e.target.value);
-    // };
 
     const handleChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -35,7 +29,7 @@ const TableBodyInputs = ({ item: {id, name, owner, description, members, status,
 
     const submitHandler = (e) => {
         e.preventDefault();
-        updateDocument(id, inputs, options);
+        updateDocument(id, inputs);
         setIsEdit(false);
     };
 
@@ -86,16 +80,17 @@ const TableBodyInputs = ({ item: {id, name, owner, description, members, status,
                     name="description"
                 ></TextField>
             </TableCell>
-          
-{/*             
-                <TextField select value={options} onChange={handleOptions}>
-                    {optionStatus.map((item, i) => (
-                        <MenuItem key={i} value={item}>
-                            {item}
+            <TableCell></TableCell>
+            <TableCell>
+                <Select name="status" value={inputs.status} onChange={handleChange}>
+                    {statusOptions.map((status) => (
+                        <MenuItem key={status} value={status}>
+                            {status}
                         </MenuItem>
                     ))}
-                </TextField> */}
-          
+                </Select>
+            </TableCell>
+
             <TableCell>
                 <TextField
                     size="small"
@@ -104,7 +99,7 @@ const TableBodyInputs = ({ item: {id, name, owner, description, members, status,
                     name="budget"
                 ></TextField>
             </TableCell>
-            <TableCell>
+            {/* <TableCell>
                 <TextField
                     size="small"
                     onChange={handleChange}
@@ -119,9 +114,7 @@ const TableBodyInputs = ({ item: {id, name, owner, description, members, status,
                     value={inputs?.enddate || ""}
                     name="enddate"
                 ></TextField>
-            </TableCell>
-            
-            
+            </TableCell> */}
         </>
     );
 };

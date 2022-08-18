@@ -12,18 +12,18 @@ const TableHeaderContainer = ({ documents }) => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }}>
-        <TableHead>
-          <TableRow>
+      <Table >
+        <TableHead  sx={{backgroundColor:"#1976d2" }}>
+          <TableRow >
             <TableCell align="left"></TableCell>
             <TableCell align="left"></TableCell>
             <TableCell align="left">Name</TableCell>
             <TableCell align="left">Owner</TableCell>
             <TableCell align="left">Title</TableCell>
-            <TableCell align="right">Members</TableCell>
+            <TableCell align="left">Members</TableCell>
             <TableCell align="left">Status</TableCell>
-            <TableCell align="right">Budget</TableCell>
-            <TableCell align="right">Start Date</TableCell>
+            <TableCell align="center">Budget</TableCell>
+            <TableCell align="center">Start Date</TableCell>
             <TableCell align="right">End Date</TableCell>
           </TableRow>
         </TableHead>
@@ -31,7 +31,7 @@ const TableHeaderContainer = ({ documents }) => {
           {documents?.map((item) => (
             <TableRow
             key={item.id}
-            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            sx={{ border:1}}
             >
             {isEdit === item.id  ?
               <TableBodyInputs isEdit={isEdit} setIsEdit={setIsEdit} item={item} />

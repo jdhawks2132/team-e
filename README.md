@@ -12,7 +12,7 @@ Kevin, Josh, Andrew, Alfredo, and Benedict
 - Front End
 
   - ReactJS (serving with Vite)
-  - Styling - TBD
+  - Styling - MUI
 
 - Back End
 

@@ -18,8 +18,8 @@ const TableHeaderContainer = ({ documents }) => {
             <TableCell align="left"></TableCell>
             <TableCell align="left"></TableCell>
             <TableCell align="left">Name</TableCell>
-            <TableCell align="left">Owner</TableCell>
-            <TableCell align="left">Title</TableCell>
+            <TableCell align="left">Owner ID</TableCell>
+            <TableCell align="left">Description</TableCell>
             <TableCell align="left">Members</TableCell>
             <TableCell align="left">Status</TableCell>
             <TableCell align="center">Budget</TableCell>

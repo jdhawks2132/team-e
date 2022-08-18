@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthContext } from './hooks/useAuthContext';
-import reactLogo from './assets/react.svg';
 import './App.css';
 
 import Dashboard from './pages/dashboard/Dashboard';
 import Create from './pages/create/Create';
-import Projects from './pages/project/Projects';
-import Project from './pages/project/Project';
+import Projects from './pages/project/Projects2';
 import Signup from './pages/signup/Signup';
 import Login from './pages/login/Login';
 import NewProject from './pages/create/NewProject';
 import Logout from './pages/logout/Logout';
 import Navbar from './pages/nav/Navbar';
+import ProjectDetails from './pages/project/ProjectDetails';
 
 function App() {
 	const { authIsReady, user } = useAuthContext();
@@ -53,7 +52,7 @@ function App() {
 						/>
 						<Route
 							path='/projects/:id'
-							element={user ? <Project /> : <Navigate to='/login' />}
+							element={user ? <ProjectDetails /> : <Navigate to='/login' />}
 						/>
 						<Route path='*' element={<Navigate to={'/'} />} />
 					</Routes>

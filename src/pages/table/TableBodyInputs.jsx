@@ -3,25 +3,31 @@ import { useFirestore } from "../../hooks/useFirestore";
 //styling
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ClearIcon from "@mui/icons-material/Clear";
-import { MenuItem, Select, TableCell, TextField } from "@mui/material";
+import {  MenuItem, Select, TableCell, TextField } from "@mui/material";
 
 
 //change the input object to match the firestore data
 const TableBodyInputs = ({ item: {id, name, owner, description, members, status, budget, enddate, startdate, },isEdit, setIsEdit,}) => {
-  console.log(id, members);
-  //destructure the method you want
     const { updateDocument, response } = useFirestore("test-projects");
+
+    //destructure the method you want
+    // const optionStatus = [ status, "In Progress", "Done"]
+    // const [options, setOptions] = useState(optionStatus);
+
 
     const [inputs, setInputs] = useState({
         name: name,
         owner: owner,
         description: description,
         members: members,
-        status: status,
         budget: budget,
         startdate: startdate,
         enddate: enddate,
     });
+
+    // const handleOptions = (e) => {
+    //     setOptions(e.target.value);
+    // };
 
     const handleChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -29,7 +35,7 @@ const TableBodyInputs = ({ item: {id, name, owner, description, members, status,
 
     const submitHandler = (e) => {
         e.preventDefault();
-        updateDocument(id, inputs);
+        updateDocument(id, inputs, options);
         setIsEdit(false);
     };
 
@@ -80,23 +86,16 @@ const TableBodyInputs = ({ item: {id, name, owner, description, members, status,
                     name="description"
                 ></TextField>
             </TableCell>
-            <TableCell>
-                {/* <Select
-              size="small"
-              select
-            
-              value={inputs.members}
-              onChange={handleChange}
-              name="members"
-              >
-                {members?.map(member => (
-                    <MenuItem key={member.id} value={member.displayName}>{member.displayName}</MenuItem>
+          
+{/*             
+                <TextField select value={options} onChange={handleOptions}>
+                    {optionStatus.map((item, i) => (
+                        <MenuItem key={i} value={item}>
+                            {item}
+                        </MenuItem>
                     ))}
-                    
-
-              </Select> */}
-            </TableCell>
-            <TableCell></TableCell>
+                </TextField> */}
+          
             <TableCell>
                 <TextField
                     size="small"
@@ -109,18 +108,20 @@ const TableBodyInputs = ({ item: {id, name, owner, description, members, status,
                 <TextField
                     size="small"
                     onChange={handleChange}
-                    value={inputs?.startdate}
+                    value={inputs?.startdate || ""}
                     name="startdate"
                 ></TextField>
             </TableCell>
             <TableCell>
-                <TextField
+            <TextField
                     size="small"
                     onChange={handleChange}
-                    value={inputs.enddate}
+                    value={inputs?.enddate || ""}
                     name="enddate"
                 ></TextField>
             </TableCell>
+            
+            
         </>
     );
 };

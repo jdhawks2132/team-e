@@ -7,7 +7,7 @@ import { useFirestore } from '../../hooks/useFirestore';
 
 const TableBodyContainer = ({ item: {id, name, owner, description, budget, startdate, enddate, status, members }, isEdit, setIsEdit }) => {
   const {deleteDocument} = useFirestore("test-projects")
-  console.log(members)
+  
   const editRow = () => setIsEdit(id)
   const deleteRow = () => deleteDocument(id)
   return (
@@ -17,11 +17,11 @@ const TableBodyContainer = ({ item: {id, name, owner, description, budget, start
       <TableCell align="left">{name}</TableCell>
       <TableCell align="left">{owner}</TableCell>
       <TableCell align="left">{description}</TableCell>
-      <TableCell align="left">{members.map(member => member.displayName) }</TableCell>
+      <TableCell align="left">{members.map(member => member.displayName + " ") }</TableCell>
       <TableCell align="right">{status}</TableCell>
       <TableCell align="right">{budget}</TableCell>
-        <TableCell align="right">{startdate}</TableCell>
-        <TableCell align="right">{enddate}</TableCell>
+      <TableCell align="right">{startdate}</TableCell>
+       <TableCell align="right">{enddate}</TableCell>
     </>
   );
 }

@@ -5,9 +5,8 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ClearIcon from "@mui/icons-material/Clear";
 import { MenuItem, Select, TableCell, TextField } from "@mui/material";
 
-const TableBodyInputs = ({ item:{id, name, owner, description, members, status, budget, enddate, startdate, },isEdit, setIsEdit,}) => {
+const TableBodyInputs = ({ item:{id, name, owner, description, members, memberNames, status, budget, enddate, startdate, },isEdit, setIsEdit,}) => {
     const { updateDocument, response } = useFirestore("test-projects");
-    console.log(members);
     //destructure the method you want
 
     const statusOptions = ["New", "Completed", "In Progress", "On Hold"];
@@ -16,7 +15,7 @@ const TableBodyInputs = ({ item:{id, name, owner, description, members, status, 
         name: name,
         owner: owner,
         description: description,
-        members: members,
+        memberNames: memberNames,
         status: status,
         budget: budget,
         startdate: startdate,
@@ -80,9 +79,21 @@ const TableBodyInputs = ({ item:{id, name, owner, description, members, status, 
                     name="description"
                 ></TextField>
             </TableCell>
-            <TableCell></TableCell>
             <TableCell>
-                <Select name="status" value={inputs.status} onChange={handleChange}>
+                {/* <Select name="memberNames" size="small" value={inputs.memberNames} onChange={handleChange}>
+                    {memberNames.map(member => (
+                        <MenuItem key={member} value={member}>{member}</MenuItem>
+                    ))}
+
+                </Select> */}
+            </TableCell>
+            <TableCell>
+                <Select
+                    size="small"
+                    name="status"
+                    value={inputs.status}
+                    onChange={handleChange}
+                >
                     {statusOptions.map((status) => (
                         <MenuItem key={status} value={status}>
                             {status}
@@ -108,7 +119,7 @@ const TableBodyInputs = ({ item:{id, name, owner, description, members, status, 
                 ></TextField>
             </TableCell>
             <TableCell>
-            <TextField
+                <TextField
                     size="small"
                     onChange={handleChange}
                     value={inputs?.enddate || ""}

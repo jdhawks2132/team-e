@@ -7,24 +7,24 @@ import TableBodyInputs from "./TableBodyInputs";
 
 const TableHeaderContainer = ({ documents }) => {
   const [ isEdit , setIsEdit] = useState('')
-
+console.table(documents)
 
 
   return (
     <TableContainer component={Paper}>
       <Table >
-        <TableHead >
-          <TableRow >
+        <TableHead  >
+          <TableRow sx={{backgroundColor:"#3D3D3D"}} >
+            <TableCell  align="left"></TableCell>
             <TableCell align="left"></TableCell>
-            <TableCell align="left"></TableCell>
-            <TableCell align="left">Name</TableCell>
-            <TableCell align="left">Owner ID</TableCell>
-            <TableCell align="left">Description</TableCell>
-            <TableCell align="left">Members</TableCell>
-            <TableCell align="left">Status</TableCell>
-            <TableCell align="center">Budget</TableCell>
-            <TableCell align="center">Start Date</TableCell>
-            <TableCell align="right">End Date</TableCell>
+            <TableCell sx={{color:"white"}} align="left">Name</TableCell>
+            <TableCell sx={{color:"white"}}  align="left">Owner ID</TableCell>
+            <TableCell sx={{color:"white"}}  align="left">Description</TableCell>
+            <TableCell sx={{color:"white"}} align="left">Members</TableCell>
+            <TableCell sx={{color:"white"}} align="left">Status</TableCell>
+            <TableCell sx={{color:"white"}} align="center">Budget</TableCell>
+            <TableCell sx={{color:"white"}}  align="center">Start Date</TableCell>
+            <TableCell sx={{color:"white"}}  align="right">End Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

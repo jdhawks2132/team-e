@@ -1,11 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthContext } from './hooks/useAuthContext';
-
 import './App.css';
-
 import Dashboard from './pages/dashboard/Dashboard';
 import Projects from './pages/project/Projects';
-
 import Signup from './pages/signup/Signup';
 import Login from './pages/login/Login';
 import NewProject from './pages/create/NewProject';

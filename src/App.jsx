@@ -5,7 +5,7 @@ import './App.css';
 
 import Dashboard from './pages/dashboard/Dashboard';
 import Create from './pages/create/Create';
-import Projects from './pages/project/Projects2';
+import Projects from './pages/project/Projects';
 import Signup from './pages/signup/Signup';
 import Login from './pages/login/Login';
 import NewProject from './pages/create/NewProject';

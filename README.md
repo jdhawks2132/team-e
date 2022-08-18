@@ -1,5 +1,6 @@
 
 ![team-e logo](https://github.com/jdhawks2132/team-e/blob/main/EORG.png?raw=true)
+![app-demo](https://github.com/jdhawks2132/team-e/blob/main/eorgApp.png?raw=true)
 
 
 ## Members:

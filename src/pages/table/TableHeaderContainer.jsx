@@ -15,7 +15,8 @@ const TableHeaderContainer = ({ documents }) => {
       <Table sx={{ minWidth: 650 }}>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Edit</TableCell>
+            <TableCell align="left"></TableCell>
+            <TableCell align="left"></TableCell>
             <TableCell align="left">Name</TableCell>
             <TableCell align="left">Owner</TableCell>
             <TableCell align="left">Title</TableCell>

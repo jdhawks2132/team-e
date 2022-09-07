@@ -17,41 +17,47 @@ const Projects = () => {
   const { documents } = useCollection('test-projects')
 
  
-  
-  useEffect(()=> {
-     if(documents && user){
-         let projectss = documents.filter((doc) => doc.owner == user.uid);
+  ///created a hook so this logic can be reused
+//   useEffect(()=> {
+//      if(documents && user){
+//          let projectss = documents.filter((doc) => doc.owner == user.uid);
 
-         let teamMember = []
+//          let teamMember = []
 
-         const projectsTwo = documents.forEach(pro => {
-            let membersarr = pro.members
-            console.log(membersarr)
-            membersarr.forEach(member => {
-                if(member.id === user.uid) teamMember.push(pro)
-            })
-         })
+//          const projectsTwo = documents.forEach(pro => {
+//             let membersarr = pro.members
+//             console.log(membersarr)
+//             membersarr.forEach(member => {
+//                 if(member.id === user.uid) teamMember.push(pro)
+//             })
+//          })
 
-         let semifinalProjects = [...projectss, ...teamMember]
-        const uniqueIds = []
-        const finalProjects = semifinalProjects.filter(pro =>{
-            const isDuplicate = uniqueIds.includes(pro.id)
+//          let semifinalProjects = [...projectss, ...teamMember]
+//         const uniqueIds = []
+//         const finalProjects = semifinalProjects.filter(pro =>{
+//             const isDuplicate = uniqueIds.includes(pro.id)
 
-            if(!isDuplicate){
+//             if(!isDuplicate){
 
-                uniqueIds.push(pro.id);
-                return true
-            } 
-            return false
-        })
+//                 uniqueIds.push(pro.id);
+//                 return true
+//             } 
+//             return false
+//         })
         
 
          
-         console.log(finalProjects)
-         setProjects(finalProjects)
-     }
+//          console.log(finalProjects)
+//          setProjects(finalProjects)
+//      }
+     
+//   }, [user, documents])
+
+  useEffect(()=> {
+     if(documents && user) setProjects(documents)
      
   }, [user, documents])
+
 
  
 
